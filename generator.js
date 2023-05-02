@@ -1,40 +1,48 @@
 const generator = {
  display: '',
- storage: '',
- lowerCase: 'abcdefghijklmnopqrstuvwxyz',
- upperCase: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
- numbers: '0123456789',
- symbols: '!@#$%^&*()_+~`|}{[]:;?><,./-=',
- allCase:
-  'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+~`|}{[]:;?><,./-=',
- _randomPicker: function (x) {
-  return x[Math.floor(Math.random() * x.length)];
+ _storage: '',
+ _lowerCase: 'abcdefghijklmnopqrstuvwxyz',
+ _upperCase: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+ _numbers: '0123456789',
+ _symbols: '!@#$%^&*()_+~`|}{[]:;?><,./-=',
+ _allCase: '',
+ _randomPicker: function (selectedCase) {
+  return x[Math.floor(Math.random() * selectedCase.length)];
  },
  _addLowercase: function () {
-  this.storage += this._randomPicker(this.lowerCase);
+  this._allCase += this._lowerCase;
+  this._storage += this._randomPicker(this._lowerCase);
  },
  _addUppercase: function () {
-  this.storage += this._randomPicker(this.upperCase);
+  this._allCase += this._upperCase;
+  this._storage += this._randomPicker(this._upperCase);
  },
  _addNumbers: function () {
-  this.storage += this._randomPicker(this.numbers);
+  this._allCase += this._numbers;
+  this._storage += this._randomPicker(this._numbers);
  },
  _addSymbols: function () {
-  this.storage += this._randomPicker(this.symbols);
+  this._allCase += this._symbols;
+  this._storage += this._randomPicker(this._symbols);
  },
  _generatePassword: function (count) {
   lowerCaseInput.checked ? this._addLowercase() : null;
   upperCaseInput.checked ? this._addUppercase() : null;
   numbersInput.checked ? this._addNumbers() : null;
   symbolsInput.checked ? this._addSymbols() : null;
-  for (var i = this.storage.length; i < count; i++) {
-   this.storage += this._randomPicker(this.allCase);
+  if (this._allCase.length == 0) {
+   alert('Please select atleast one option');
+   return;
   }
+  for (var i = this._storage.length; i < count; i++) {
+   this._storage += this._randomPicker(this._allCase);
+  }
+  this._allCase = '';
   this.refreshDisplay();
  },
  refreshDisplay: function () {
-  this.display = this.storage;
-  this.storage = '';
+  this.display = this._storage;
+  this._storage = '';
   generatedPassword.innerText = this.display;
  },
 };
