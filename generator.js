@@ -7,7 +7,7 @@ const generator = {
  _symbols: '!@#$%^&*()_+~`|}{[]:;?><,./-=',
  _allCase: '',
  _randomPicker: function (selectedCase) {
-  return x[Math.floor(Math.random() * selectedCase.length)];
+  return selectedCase[Math.floor(Math.random() * selectedCase.length)];
  },
  _addLowercase: function () {
   this._allCase += this._lowerCase;
